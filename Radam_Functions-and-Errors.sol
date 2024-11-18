@@ -1,25 +1,32 @@
 pragma solidity 0.8.18;
 
-contract SimpleContract {
-    uint public balance;
+contract VendingMachine {
+    uint public balance; // Tracks the user's balance
+    uint public itemPrice = 2; // Fixed price for an item
 
-    // Function that uses require() to check an input condition
+    // Deposit credits to the vending machine
     function deposit(uint amount) public {
-        require(amount > 0, "Amount must be greater than zero"); // Only accept positive deposits
+        require(amount > 0, "Deposit amount must be greater than zero"); // Ensure positive deposits
         balance += amount;
     }
 
-    // Function to check that balance is never negative
-    function checkBalance() public view {
-        assert(balance >= 0);
+    // Purchase an item from the vending machine
+    function purchaseItem(uint itemCount) public {
+        uint totalCost = itemPrice * itemCount;
+        require(itemCount > 0, "You must buy at least one item"); // Valid item count
+        require(balance >= totalCost, "Insufficient balance for the purchase"); // Ensure enough balance
+        balance -= totalCost; // Deduct the total cost from balance
     }
 
-    // Function that demonstrates revert
-    function incrementBalance(bool stopIncrement) public {
-        if (stopIncrement) {
-            revert("Increment operation was stopped intentionally"); // Reverts if stopIncrement is true
+    // Check if the balance is never negative (using assert)
+    function checkBalance() public view {
+        assert(balance >= 0); // Assert ensures no logical errors reduce balance below zero
+    }
+
+    // Reset the machine (example of revert usage)
+    function resetMachine(bool reset) public {
+        if (reset) {
+            revert("Machine reset was triggered intentionally"); // Reverts if reset is requested
         }
-        // Increase balance as a simple operation if no revert
-        balance += 1;
     }
 }
