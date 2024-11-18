@@ -1,39 +1,60 @@
-# SimpleContract
+# VendingMachine
 
-This Solidity program is a basic contract demonstrating the use of `require`, `assert`, and `revert` statements. The `SimpleContract` allows users to deposit amounts, check balance integrity, and increment the balance under certain conditions, serving as a straightforward example of control statements in Solidity.
+This Solidity program is a simple smart contract simulating a vending machine. It demonstrates key Solidity control structures (`require`, `assert`, and `revert`) while allowing users to deposit credits, purchase items, and check balance integrity.
 
 ## Description
 
-The `SimpleContract` includes the following functionalities:
+The `VendingMachine` contract includes the following functionalities:
 
-- **Public Balance Variable**: Keeps track of a simple balance, which is visible to any user.
-- **`deposit` Function (using `require`)**: Accepts a positive deposit amount, using `require` to validate that the deposit amount is greater than zero.
-- **`checkBalance` Function (using `assert`)**: Ensures that the `balance` is always non-negative. The `assert` statement verifies that no unintended state changes have made the balance negative.
-- **`incrementBalance` Function (using `revert`)**: Demonstrates the `revert` statement by allowing a conditional stop to the increment operation if a specific condition is met.
+- **Public Balance Variable**: Tracks the user's current balance.
+- **`deposit` Function (using `require`)**: Accepts a deposit amount, ensuring the amount is greater than zero using `require`.
+- **`purchaseItem` Function (using `require`)**: Allows users to purchase items, ensuring they have sufficient balance and the item count is valid.
+- **`checkBalance` Function (using `assert`)**: Ensures that the `balance` remains non-negative, highlighting the logical integrity of the contract.
+- **`resetMachine` Function (using `revert`)**: Demonstrates the `revert` statement by intentionally triggering a contract reset when requested.
 
-This contract is ideal for anyone looking to understand the practical uses of `require`, `assert`, and `revert` in a Solidity smart contract.
+This contract is an excellent starting point for learning how to implement essential control statements in Solidity.
+
+---
 
 ## Getting Started
 
 ### Prerequisites
-To work with this contract, you will need:
-- [Remix IDE](https://remix.ethereum.org/) or another Solidity development environment.
-- Basic knowledge of Solidity and smart contract deployment.
+To use this contract, you will need:
+- [Remix IDE](https://remix.ethereum.org/) or another Solidity-compatible development environment.
+- Basic knowledge of Solidity and blockchain concepts.
 
 ### Running the Contract
-To run this contract, you can use Remix, an online Solidity IDE. 
+1. Open [Remix IDE](https://remix.ethereum.org/) and create a new file with the `.sol` extension (e.g., `VendingMachine.sol`).
+2. Copy the contract code into the file.
+3. In the **Solidity Compiler** tab, select the compiler version `0.8.18` and click **Compile VendingMachine.sol**.
+4. Go to the **Deploy & Run Transactions** tab, deploy the `VendingMachine` contract, and start interacting with its functions.
 
-1. Go to the Remix website and create a new file with a `.sol` extension (e.g., `SimpleContract.sol`).
-2. Copy and paste the contract code into the file.
-3. Go to the **Solidity Compiler** tab, ensure the compiler version is set to `0.8.18`, and click **Compile SimpleContract.sol**.
-4. After compiling, go to the **Deploy & Run Transactions** tab, select the `SimpleContract`, and click **Deploy**.
+---
 
-### Interacting with the Contract
+## Interacting with the Contract
 
-- **Deposit**: Call the `deposit` function with a positive integer to add that amount to the balance. If you try to deposit `0` or a negative amount, the function will revert with an error message.
-- **Check Balance**: Use `checkBalance` to ensure the balance is non-negative. If, in any unexpected case, the balance is negative, an error will be thrown, helping detect issues.
-- **Increment Balance**: Call `incrementBalance` with `false` to increase the balance by 1. If you call it with `true`, the operation will stop and the balance will not change, demonstrating the `revert` statement in action.
+### Deposit
+- **Function**: `deposit(uint amount)`
+- Use this function to add credits to the vending machine.
+- The `amount` must be greater than zero. If not, the transaction will revert with an error.
+
+### Purchase Item
+- **Function**: `purchaseItem(uint itemCount)`
+- Use this function to purchase items from the vending machine.
+- The `itemCount` must be greater than zero, and your `balance` must be sufficient to cover the total cost (item price × item count).
+
+### Check Balance
+- **Function**: `checkBalance()`
+- This is a read-only function that ensures the `balance` is non-negative.
+- If the `balance` is ever negative due to a logical error, the function will throw an error.
+
+### Reset Machine
+- **Function**: `resetMachine(bool reset)`
+- Call this function with `true` to trigger a reset. The function demonstrates the use of `revert` to halt execution under specific conditions.
+
+---
 
 ## Authors
 
-Moira Gabrielle L. Radam | 4th-year student from Far Eastern University of Technology
+Moira Gabrielle L. Radam  
+4th-year student at Far Eastern University of Technology  
